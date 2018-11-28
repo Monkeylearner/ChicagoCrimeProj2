@@ -5,47 +5,42 @@ function buildCharts(sample) {
   var url = "/samples/" + sample;
   d3.json(url).then(function(data) {
    
-    var x_values = data.area;
-    var y_values = data.sample_values;
-    var marker_size = data.sample_values;
-    var marker_colors = data.area;
-    var text_values = data.community;
-
-    var response = {
-      x: x_values,
-      y: y_values,
-      text: text_values,
-      mode: 'markers',
-      marker: {
-        color: marker_colors,
-        size: marker_size
-      }
+    result = [];
+    for (var i = 0; i < data.community.length; i++) {
+      result.push({"area": data.area[i], "community": data.community[i], "sample_values": data.sample_values[i]});
     };
+    result.sort((a, b) => b.sample_values - a.sample_values);
+    result = result.slice(0, 10);
+    console.log(result);
 
-    var data = [response];
+    // Trace1 for the sample data
+    var trace1 = {
+      values: result.map(row => row.sample_values),
+      labels: result.map(row => row.community),
+      //hovertext: result.map(row => row.community),
+      type: "pie",
+      orientation: "h"
+    };
+    var pieChart = [trace1];
+    Plotly.newPlot("pie", pieChart);
+
+    // @TODO: Build a Bubble Chart using the sample data
+    var trace2 = {
+      x: data.area,
+      y: data.sample_values,
+      type: "scatter",
+      mode: "markers",
+      marker: {
+        size: data.sample_values,
+        color: data.area
+      },
+      text: data.community
+    };
+    var bubbleChart = [trace2];
     var layout = {
       xaxis: {title: "Crime in Chicago community"},
     };
-
-    Plotly.newPlot('bubble', data, layout);
-  })
-
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
-  d3.json(url).then(function(data) {
-    var pie_values = data.sample_values;
-    var pie_labels = data.community;
-    var pie_hover = data.community;
-
-    var data =  [{
-      values: pie_values,
-      label: pie_labels,
-      hovertext: pie_hover,
-      type: 'pie'
-    }];
-
-    Plotly.newPlot('pie', data);
+    Plotly.newPlot("bubble", bubbleChart, layout);
   });
 }
 
@@ -65,15 +60,14 @@ function init() {
     // Use the first sample from the list to build the initial plots
     const firstSample = sampleNames[0];
     buildCharts(firstSample);
-    buildMetadata(firstSample);
   });
 }
 
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildCharts(newSample);
-  buildMetadata(newSample);
 }
 
 // Initialize the dashboard
 init();
+
