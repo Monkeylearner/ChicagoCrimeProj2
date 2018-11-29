@@ -168,7 +168,7 @@ function makeResponsive() {
     }
 
     // Import Data from csv file
-    var file = "assets/data/crime.csv"
+    var file = "/static/assets/data/crime.csv"
     d3.csv(file).then(fileData, exception);
 
     function exception(error){
