@@ -504,7 +504,7 @@ function makeResponsive() {
                 morningLabel
                     .classed("active", true)
                     .classed("inactive", false);
-                afternoonlabel
+                afternoonLabel
                     .classed("active", false)
                     .classed("inactive", true);
                 eveningLabel
@@ -519,7 +519,7 @@ function makeResponsive() {
                 morningLabel
                     .classed("active", false)
                     .classed("inactive", true);
-                afternoonlabel
+                afternoonLabel
                     .classed("active", true)
                     .classed("inactive", false);
                 eveningLabel
@@ -533,7 +533,7 @@ function makeResponsive() {
                 morningLabel
                     .classed("active", false)
                     .classed("inactive", true);
-                afternoonlabel
+                afternoonLabel
                     .classed("active", false)
                     .classed("inactive", true);
                 eveningLabel
@@ -548,7 +548,7 @@ function makeResponsive() {
                 morningLabel
                     .classed("active", false)
                     .classed("inactive", true);
-                afternoonlabel
+                afternoonLabel
                     .classed("active", false)
                     .classed("inactive", true);
                 eveningLabel
